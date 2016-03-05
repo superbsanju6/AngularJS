@@ -1,0 +1,90 @@
+﻿<!--also suitable for creation-->
+<label>{{ field.title }}<em ng-hide="!field.required">*</em> :</label>
+<span ng-switch on="field.ControlType.View">
+    <!--<span ng-switch-when="input">
+        <input ng-model="entity[field.name]"
+               type="text" />
+    </span>
+    <span ng-switch-when="checkbox">
+        <input ng-model="entity[field.name]"
+               ng-checked="entity[field.name]"
+               type="checkbox" />
+    </span>
+    <span ng-switch-when="textarea">
+        <textarea ng-model="entity[field.name]"></textarea>
+    </span>-->
+
+
+
+  
+    <div class="row" ng-switch-when="0">
+        <div class="col col-4">
+            <label><b>{{field.Name}}</b></label>
+        </div>
+      
+            <section class="col col-8">
+                <label class="select">
+                    <select name="ddl{{field.Name}}" ng-model="item.SelectedValue" >
+                        <option value="">-- Select {{field.Name}}--</option>
+                        <option ng:repeat="item in field.ControlType.Options" value="{{item.DisplayUniqueID}}">
+                            {{item.DisplayValue}}
+                        </option>
+                    </select>
+                </label>
+            </section>
+   
+    </div>
+
+
+    <div class="row" ng-switch-when="4">
+        <div class="col col-4">
+            <label><b>{{field.Name}}</b></label>
+        </div>
+
+        <section class="col col-8">
+            <label class="select">
+                <input type="text" id="field.Name" name="field.Name" ng-model="field.Name" datepicker />
+            </label>
+        </section>
+
+    </div>
+
+
+        <div class="row" ng-switch-when="2">
+            <div class="col col-4">
+                <label><b>{{field.Name}}</b></label>
+            </div>
+
+            <section class="col col-8">
+                <label class="select">
+                    <table>
+                        <tr ng-repeat="language in field.ControlType.Options">
+                            <td class="col-2"><input type="checkbox" name="chk{{language.DisplayUniqueID}}" id="chk{{language.DisplayUniqueID}}" ng-model="language.checked" ng-change="selectedLanguages()" /> <label>{{language.DisplayValue}}</label></td>
+                            <label for="{{}}"
+                        </tr>
+                    </table>
+                </label>
+            </section>
+
+        </div>
+
+            <!--You can add more custom widget types needed for your project-->
+            <span ng-switch-default>
+                <span>Unknown widget</span>
+            </span>
+   
+</span>  
+
+
+
+<script type="text/ng-template" id="custom-datepicker.html">
+    <div class="enhanced-datepicker">
+        <div class="proxied-field-wrap">
+            <input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions" />
+        </div>
+        <label>
+            <button class="btn" type="button"><i class="icon-calendar"></i></button>
+            <span class="datepicker-date">{{ngModel | date:'d MMM yyyy'}}</span>
+        </label>
+    </div>
+</script>

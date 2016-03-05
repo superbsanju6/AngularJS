@@ -1,0 +1,117 @@
+﻿<html ng-app="vynsoftReportApp">
+@{
+    ViewBag.Title = "Generate Customer Language Report";
+}
+
+<head title="">
+
+
+    <link href="~/content/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="~/content/css/amelia-bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/css/toaster.css" rel="stylesheet" />-->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/content/css/loading-bar.min.css" rel="stylesheet" />
+    <link href="~/content/css/site.css" rel="stylesheet" />
+    <link href="~/content/css/jquery-ui.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+
+<body>
+    <div id="page" class="sky-form">
+
+        <header class="text-center"><span class="pull-left"><a href="/"><i class="fa fa-home"></i></a></span>Generate Customer Language Report</header>
+
+        <div class="col-6" id="tblContainer" ng-controller="FormGenerationController" style="margin-top:20px !important;margin-left:50px !important;">
+            <div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label><b>Report Name</b></label>
+                    </div>
+                    <section class="col col-8">
+                        <label class="select">
+                            <select name="selectedReportId" ng-model="ReportId_PK" ng-change="populateParameters()">
+                                <option value="">-- Select Report--</option>
+                                <option ng:repeat="report in WebMaster.ReportCatalogues" value="{{report.ReportId_PK}}">{{report.Name}}</option>
+                            </select>
+
+                        </label>
+                    </section>
+                    <span ng-show="FormGenerationController.selectedReportId.$error.required">Select Report</span>
+                </div>
+            </div>
+
+            @*<pre> {{ WebMaster.Parameters }} </pre>*@
+
+            @*<pre> {{ WebMaster.Controls}} </pre>*@
+            <div ng-repeat="field in WebMaster.Controls">
+                <ng-include src="'app/view/DCControls.html'" ></ng-include>
+            </div>
+
+            @*<h1>Edit/New mode:</h1>
+                <div ng-repeat="field in fields">
+                    <ng-include src="'app/view/DCEdit.html'" />
+                </div>
+                <div>
+                    <h1>Your entity JSON:</h1>
+                    {{ entity }}
+                </div>
+                <h1>View mode:</h1>
+                <div ng-repeat="field in fields">
+                    <ng-include src="'app/view/DCView.html'" />
+                </div>*@
+
+            <div>
+                <input type="button" id="btnsave" value="Generate Report" class="button" ng-click="GenerateReport()" />
+            </div>
+
+
+
+        </div>
+        <footer>
+            <div class="row">
+                <div class="col col-2">
+
+                </div>
+                <div class="col col-4">
+                    <!-- <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                         Generate Report
+                         <span class="glyphicon glyphicon-chevron-down"></span>
+                     </button>-->
+
+
+
+
+                </div>
+
+            </div>
+
+        </footer>
+    </div>
+
+</body>
+
+<!-- 3rd party libraries -->
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/loading-bar.min.js"></script>
+<script src="~/Scripts/toaster.js"></script>
+<script src="~/Scripts/ui-bootstrap-0.9.0.min.js"></script>
+<script src="~/Scripts/ui-bootstrap-tpls-0.9.0.min.js"></script>
+
+<!-- Load app main script -->
+<script src="~/app/app.js"></script>
+
+<!-- Load services -->
+<script src="~/app/services/Service.js"></script>
+
+<!-- Load controllers -->
+
+<script src="~/app/controllers/DynamicController.js"></script>
+<script src="~/app/controllers/navigationController.js"></script>
+

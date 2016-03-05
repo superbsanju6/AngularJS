@@ -1,0 +1,215 @@
+﻿<html ng-app="vynsoftReportApp">
+@{
+    ViewBag.Title = "Generate Customer Language Report";
+}
+
+<head title="">
+
+
+    <link href="~/content/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="~/content/css/amelia-bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/css/toaster.css" rel="stylesheet" />-->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/content/css/loading-bar.min.css" rel="stylesheet" />
+    <link href="~/content/css/site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+
+<body>
+    <div id="page" class="sky-form">
+       
+        <header class="text-center"><span class="pull-left"><a href="/"><i class="fa fa-home"></i></a></span>Generate Customer Language Report</header>
+        @*<header class="container" data-ng-controller="navigationController">
+                <div id="menu" class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <div id="logo">
+                            <a href='#/'>
+                                <h4>Customer Language Speaker </h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar-collapse collapse" data-collapse="!navbarExpanded">
+                        <ul class="nav navbar-nav navbar-right" ng-model="WebMaster.ReportCatalogues">
+                            <li ng-repeat="report in WebMaster.ReportCatalogues" data-ng-class="{'active':isActive('/explore')}" ng-bind-html-unsafe="report.Name"><a href="#">{{report.Name}}</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </header>*@
+
+        <div class="col-6" id="tblContainer" ng-controller="reportController" style="margin-top:20px !important;margin-left:50px !important;">
+            <div>
+                
+
+                <div class="row">
+                    <div class="col col-4">
+                        <label><b>Report Name</b></label>
+                    </div>
+                    <section class="col col-8">
+                        <label class="select">
+                            <select name="selectedReportId"  ng-model="ReportId_PK" required>
+                                <option value="">-- Select One--</option>
+                                <option ng:repeat="report in WebMaster.ReportCatalogues" value="{{report.ReportId_PK}}">{{report.Name}}</option>
+                            </select>
+                           
+                        </label>
+                    </section>
+                    <span ng-show="tblContainer.selectedReportId.$error.required">Select Report</span>
+                </div>
+
+                <div id="tblCRUD" ng-repeat="controles in WebMaster.Parameters">
+
+                    <div class="row" ng-show="controles.ControlType=='DropDown'" ng-if="controles.Name=='Customer'">
+                        <div class="col col-4">
+                            <label><b>Select {{ controles.Name}}</b></label>
+                        </div>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select name="selectedCustomerId" ng-model="WebMaster.Customers.CustomerId" ng-change="customerChanged()">
+                                    <option value="">-- Select One--</option>
+                                    <option ng:repeat="customer in WebMaster.Customers" value="{{customer.CustomerId}}">{{customer.FullName}}</option>
+                                </select>
+                                        <i></i>
+                            </label>
+                        </section>
+                    </div>
+
+                    <div class="row" ng-show="controles.ControlType=='DropDown'" ng-if="controles.Name=='Country'">
+                        <div class="col col-4">
+                            <label><b>Select {{ controles.Name}}</b></label>
+                        </div>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select name="selectedContryId" ng-model="WebMaster.Countries.CountryId" ng-change="countryChanged()">
+                                    <option value="">-- Select One--</option>
+                                    <option ng:repeat="country in WebMaster.Countries" value="{{country.CountryId}}">{{country.Name}}</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+
+
+
+                    
+
+
+                    <div class="row" data-ng-show="WebMaster.States || WebMaster.States.length>0" ng-show="controles.ControlType=='DropDown'" ng-if="controles.Name=='State'">
+                        <div class="col col-4">
+                            <label><b>Select  {{ controles.Name}}</b></label>
+                        </div>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select name="WebMaster.selectedStateId" ng-model="WebMaster.States.StateId" ng-change="stateChanged()">
+                                    <option value="">-- Select One--</option>
+                                    <option ng:repeat="state in WebMaster.States" value="{{state.StateId}}">{{state.Name}}</option>
+                                </select>
+
+                            </label>
+                        </section>
+                    </div>
+
+
+                    <div class="row" data-ng-show="WebMaster.Cities || WebMaster.Cities.length>0" ng-show="controles.ControlType=='DropDown'" ng-if="controles.Name=='City'">
+                        <div class="col col-4">
+                            <label><b>Select {{ controles.Name}}</b></label>
+                        </div>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select name="WebMaster.selectedCityId" ng-model="WebMaster.Cities.CityId">
+                                    <option value="">-- Select One--</option>
+                                    <option ng:repeat="city in WebMaster.Cities" value="{{city.CityId}}">{{city.Name}}</option>
+                                </select>
+
+                            </label>
+                        </section>
+                    </div>
+
+                    <div class="row" ng-show="controles.ControlType=='CheckBox'" ng-if="controles.Name=='IsEnglish'">
+                        <div class="col col-4">
+                            <label><b>{{ controles.ColumnName }}</b></label>
+                        </div>
+                        <section class="col col-8">
+                            <label class="select">
+                                <input type="checkbox" id="isEnglish" readonly="readonly" ng-model="ColumnName" />
+                            </label>
+                        </section>
+                    </div>
+
+
+                    <div class="row" ng-show="controles.ControlType=='CheckBoxList'" ng-if="controles.Name=='Languages'">
+                        <div class="col col-4">
+                            <label><b>Select {{ controles.Name }}</b></label>
+                        </div>
+                        <section class="col col-8">
+
+                            <label class="select">
+                                <table>
+                                    <tr ng-repeat="language in WebMaster.Languages">
+                                        <td class="col-2"><input type="checkbox" onchange="languageChange()" checkbox-group /> <label>{{language.Name}}</label></td>
+                                    </tr>
+                                </table>
+                            </label>
+                        </section>
+                    </div>
+
+
+
+                </div>
+
+                <input type="button" id="btnsave" value="Generate Report" class="button" ng-click="GenerateReport()" />
+
+
+            </div>
+        </div>
+        <footer>
+            <div class="row">
+                <div class="col col-2">
+
+                </div>
+                <div class="col col-4">
+                   <!-- <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                        Generate Report
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </button>-->
+
+                   
+
+                    
+                 </div>
+
+            </div>
+
+        </footer>
+    </div>
+</body>
+</html>
+<script>
+    function checkSomething(ControlType) {
+        if (ControlType == 'CheckBox') {
+            return false;
+        }
+    }
+</script>
+
+<!-- 3rd party libraries -->
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/loading-bar.min.js"></script>
+<script src="~/Scripts/toaster.js"></script>
+<script src="~/Scripts/ui-bootstrap-0.9.0.min.js"></script>
+<script src="~/Scripts/ui-bootstrap-tpls-0.9.0.min.js"></script>
+
+<!-- Load app main script -->
+<script src="~/app/app.js"></script>
+
+<!-- Load services -->
+<script src="~/app/services/Service.js"></script>
+
+<!-- Load controllers -->
+<script src="~/app/controllers/Controller.js"></script>
+<script src="~/app/controllers/navigationController.js"></script>
+

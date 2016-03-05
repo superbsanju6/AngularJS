@@ -1,0 +1,22 @@
+﻿<label>{{ field.title }}:</label>
+<span ng-switch on="field.type.view">
+    <span ng-switch-when="input">
+        {{ entity[field.name] }}
+    </span>
+    <span ng-switch-when="checkbox">
+        <input ng-model="entity[field.name]"
+               ng-checked="entity[field.name]"
+               ng-disabled="true"
+               type="checkbox" />
+    </span>
+    <span ng-switch-when="textarea">
+        {{ entity[field.name] }}
+    </span>
+    <span ng-switch-when="select">
+        {{ field.type.options[entity[field.name]].name }}
+    </span>
+    <!--You can add more custom widget types needed for your project-->
+    <span ng-switch-default>
+        <span>Unknown widget</span>
+    </span>
+</span>  

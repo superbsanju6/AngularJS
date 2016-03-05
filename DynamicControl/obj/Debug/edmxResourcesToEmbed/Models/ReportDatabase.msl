@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="POCWebReportModelStoreContainer" CdmEntityContainer="ReportDatabaseEntities">
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="POCWebReportModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="CityId_PK" ColumnName="CityId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="StateID_FK" ColumnName="StateID_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="POCWebReportModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryId_PK" ColumnName="CountryId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="POCWebReportModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="CustomerId_PK" ColumnName="CustomerId_PK" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CountryID_FK" ColumnName="CountryID_FK" />
+          <ScalarProperty Name="StateID_FK" ColumnName="StateID_FK" />
+          <ScalarProperty Name="CityID_FK" ColumnName="CityID_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Languages">
+      <EntityTypeMapping TypeName="POCWebReportModel.Customer_Languages">
+        <MappingFragment StoreEntitySet="Customer_Languages">
+          <ScalarProperty Name="Id_PK" ColumnName="Id_PK" />
+          <ScalarProperty Name="LanguageID_FK" ColumnName="LanguageID_FK" />
+          <ScalarProperty Name="CustomerID_FK" ColumnName="CustomerID_FK" />
+          <ScalarProperty Name="isPrimary" ColumnName="isPrimary" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Languages">
+      <EntityTypeMapping TypeName="POCWebReportModel.Language">
+        <MappingFragment StoreEntitySet="Language">
+          <ScalarProperty Name="LanguageId_PK" ColumnName="LanguageId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="POCWebReportModel.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="StateId_PK" ColumnName="StateId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CountryID_FK" ColumnName="CountryID_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WebReportCatalogues">
+      <EntityTypeMapping TypeName="POCWebReportModel.WebReportCatalogue">
+        <MappingFragment StoreEntitySet="WebReportCatalogue">
+          <ScalarProperty Name="ReportPath" ColumnName="ReportPath" />
+          <ScalarProperty Name="ReportId_PK" ColumnName="ReportId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WebReportParameters">
+      <EntityTypeMapping TypeName="POCWebReportModel.WebReportParameter">
+        <MappingFragment StoreEntitySet="WebReportParameter">
+          <ScalarProperty Name="ngModel" ColumnName="ngModel" />
+          <ScalarProperty Name="RPId_PK" ColumnName="RPId_PK" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ControlType" ColumnName="ControlType" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="ReportId_FK" ColumnName="ReportId_FK" />
+          <ScalarProperty Name="OrderByControl" ColumnName="OrderByControl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WebReportServers">
+      <EntityTypeMapping TypeName="POCWebReportModel.WebReportServer">
+        <MappingFragment StoreEntitySet="WebReportServer">
+          <ScalarProperty Name="RSID_PK" ColumnName="RSID_PK" />
+          <ScalarProperty Name="Reportid_FK" ColumnName="Reportid_FK" />
+          <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+          <ScalarProperty Name="ServerURL" ColumnName="ServerURL" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Get_CustomerLanguages" FunctionName="POCWebReportModel.Store.Get_CustomerLanguages">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="POCWebReportModel.Get_CustomerLanguages_Result">
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Get_CustomerReportLanguages" FunctionName="POCWebReportModel.Store.Get_CustomerReportLanguages">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="POCWebReportModel.Get_CustomerLanguages_Result">
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="WebReportParamCascadeMappings">
+      <EntityTypeMapping TypeName="POCWebReportModel.WebReportParamCascadeMapping">
+        <MappingFragment StoreEntitySet="WebReportParamCascadeMapping">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="OrderByControl" ColumnName="OrderByControl" />
+          <ScalarProperty Name="CascadeRPId_FK" ColumnName="CascadeRPId_FK" />
+          <ScalarProperty Name="PRId_FK" ColumnName="PRId_FK" />
+          <ScalarProperty Name="ReportId_FK" ColumnName="ReportId_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

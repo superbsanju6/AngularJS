@@ -1,0 +1,45 @@
+﻿
+
+<!DOCTYPE html>
+
+<html ng-app="vynsoftReportApp">
+@{
+    ViewBag.Title = "Generate Reports";
+}
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body ng-controller="DCCtrl" ng-cloak="">
+    <p>
+        This demo is a really ugly example of the basic functionality of this module.  Have a look
+        through the code and get a feel for how everything works.
+    </p>
+    <dynamic-form class="col-md-8" template-url="templates/DCTempalte.js" ng-model="urlFormData">
+        <dynamic-form class="col-md-12" template="stdFormTemplate" ng-model="stdFormData">
+            <legend>template= test</legend>
+        </dynamic-form>
+        <legend>templateUrl= test</legend>
+    </dynamic-form>
+    <div class="col-md-4">
+        <div class="fixed col-md-4">
+            <pre>stdFormData: {{stdFormData | pretty}}</pre>
+            <pre>urlFormData: {{urlFormData | pretty}}</pre>
+        </div>
+    </div>
+
+  
+</body>
+</html>
+
+<!-- 3rd party libraries -->
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/loading-bar.min.js"></script>
+<script src="~/Scripts/toaster.js"></script>
+<script src="~/Scripts/ui-bootstrap-0.9.0.min.js"></script>
+<script src="~/Scripts/ui-bootstrap-tpls-0.9.0.min.js"></script>
+
+<script src="~/app/templates/dynamicForm.js"></script>
+<script src="~/app/app.js"></script>
+

@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="POCWebReportModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId_PK" />
+    </Key>
+    <Property Name="CityId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="StateID_FK" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId_PK" />
+    </Key>
+    <Property Name="CountryId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId_PK" />
+    </Key>
+    <Property Name="CustomerId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="20" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="JoiningDate" Type="date" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CountryID_FK" Type="uniqueidentifier" />
+    <Property Name="StateID_FK" Type="uniqueidentifier" />
+    <Property Name="CityID_FK" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Customer_Languages">
+    <Key>
+      <PropertyRef Name="Id_PK" />
+    </Key>
+    <Property Name="Id_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LanguageID_FK" Type="uniqueidentifier" />
+    <Property Name="CustomerID_FK" Type="uniqueidentifier" />
+    <Property Name="isPrimary" Type="bit" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="LanguageId_PK" />
+    </Key>
+    <Property Name="LanguageId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId_PK" />
+    </Key>
+    <Property Name="StateId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="CountryID_FK" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="WebReportCatalogue">
+    <Key>
+      <PropertyRef Name="ReportId_PK" />
+    </Key>
+    <Property Name="ReportId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="isActive" Type="bit" />
+    <Property Name="ReportPath" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="WebReportParamCascadeMapping">
+    <Key>
+      <PropertyRef Name="ReportId_FK" />
+      <PropertyRef Name="PRId_FK" />
+    </Key>
+    <Property Name="ReportId_FK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PRId_FK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CascadeRPId_FK" Type="uniqueidentifier" />
+    <Property Name="OrderByControl" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="WebReportParameter">
+    <Key>
+      <PropertyRef Name="RPId_PK" />
+    </Key>
+    <Property Name="RPId_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="ControlType" Type="nvarchar" MaxLength="200" />
+    <Property Name="ColumnName" Type="nvarchar" MaxLength="100" />
+    <Property Name="isActive" Type="bit" />
+    <Property Name="ReportId_FK" Type="uniqueidentifier" />
+    <Property Name="OrderByControl" Type="int" />
+    <Property Name="ngModel" Type="nvarchar" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="WebReportServer">
+    <Key>
+      <PropertyRef Name="RSID_PK" />
+    </Key>
+    <Property Name="RSID_PK" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Reportid_FK" Type="uniqueidentifier" />
+    <Property Name="ServerName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ServerURL" Type="nvarchar" MaxLength="500" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="isActive" Type="bit" />
+  </EntityType>
+  <Association Name="FK_City">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId_PK" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId_PK" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CityID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId_PK" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CountryID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Languages_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Customer_Languages" Type="Self.Customer_Languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId_PK" />
+      </Principal>
+      <Dependent Role="Customer_Languages">
+        <PropertyRef Name="CustomerID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Languages_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+    <End Role="Customer_Languages" Type="Self.Customer_Languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageId_PK" />
+      </Principal>
+      <Dependent Role="Customer_Languages">
+        <PropertyRef Name="LanguageID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_State">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId_PK" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="StateID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportParameter">
+    <End Role="WebReportCatalogue" Type="Self.WebReportCatalogue" Multiplicity="0..1" />
+    <End Role="WebReportParameter" Type="Self.WebReportParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WebReportCatalogue">
+        <PropertyRef Name="ReportId_PK" />
+      </Principal>
+      <Dependent Role="WebReportParameter">
+        <PropertyRef Name="ReportId_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReportServer">
+    <End Role="WebReportCatalogue" Type="Self.WebReportCatalogue" Multiplicity="0..1" />
+    <End Role="WebReportServer" Type="Self.WebReportServer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WebReportCatalogue">
+        <PropertyRef Name="ReportId_PK" />
+      </Principal>
+      <Dependent Role="WebReportServer">
+        <PropertyRef Name="Reportid_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId_PK" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryID_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Get_CustomerLanguages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Get_CustomerReportLanguages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cParams" Type="xml" Mode="In" />
+  </Function>
+  <EntityContainer Name="POCWebReportModelStoreContainer">
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Languages" EntityType="Self.Customer_Languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebReportCatalogue" EntityType="Self.WebReportCatalogue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebReportParamCascadeMapping" EntityType="Self.WebReportParamCascadeMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebReportParameter" EntityType="Self.WebReportParameter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WebReportServer" EntityType="Self.WebReportServer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_City" Association="Self.FK_City">
+      <End Role="State" EntitySet="State" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_City" Association="Self.FK_Customer_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Country" Association="Self.FK_Customer_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Languages_Customer" Association="Self.FK_Customer_Languages_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Customer_Languages" EntitySet="Customer_Languages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Languages_Language" Association="Self.FK_Customer_Languages_Language">
+      <End Role="Language" EntitySet="Language" />
+      <End Role="Customer_Languages" EntitySet="Customer_Languages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_State" Association="Self.FK_Customer_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportParameter" Association="Self.FK_ReportParameter">
+      <End Role="WebReportCatalogue" EntitySet="WebReportCatalogue" />
+      <End Role="WebReportParameter" EntitySet="WebReportParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReportServer" Association="Self.FK_ReportServer">
+      <End Role="WebReportCatalogue" EntitySet="WebReportCatalogue" />
+      <End Role="WebReportServer" EntitySet="WebReportServer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State" Association="Self.FK_State">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
